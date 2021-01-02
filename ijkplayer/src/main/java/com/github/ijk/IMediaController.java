@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.github.ijkplayer.widget.media;
+package com.github.ijk;
 
 import android.view.View;
 import android.widget.MediaController;

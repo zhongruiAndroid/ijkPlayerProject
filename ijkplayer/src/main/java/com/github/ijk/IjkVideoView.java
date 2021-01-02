@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.github.ijkplayer.widget.media;
+package com.github.ijk;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -37,7 +37,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.MediaController;
-import android.widget.TextView;
 
 import com.github.ijkplayer.BuildConfig;
 import com.github.ijkplayer.IMediaPlayer;
@@ -47,7 +46,7 @@ import com.github.ijkplayer.R;
 import com.github.ijkplayer.TextureMediaPlayer;
 import com.github.ijkplayer.misc.IMediaDataSource;
 import com.github.ijkplayer.misc.ITrackInfo;
-import com.github.ijkplayer.widget.helper.MediaPlayerService;
+import com.github.ijk.helper.MediaPlayerService;
 
 import java.io.File;
 import java.io.IOException;

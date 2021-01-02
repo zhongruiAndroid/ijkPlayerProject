@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.github.ijkplayer.widget.media;
+package com.github.ijk;
 
 import android.annotation.TargetApi;
 import android.content.Context;

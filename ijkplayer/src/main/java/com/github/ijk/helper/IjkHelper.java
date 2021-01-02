@@ -1,4 +1,4 @@
-package com.github.ijkplayer.widget.helper;
+package com.github.ijk.helper;
 
 import com.github.ijkplayer.IjkLibLoader;
 import com.github.ijkplayer.IjkMediaPlayer;

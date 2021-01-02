@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.github.ijkplayer.widget.media;
+package com.github.ijk;
 
 import com.github.ijkplayer.misc.IMediaDataSource;
 

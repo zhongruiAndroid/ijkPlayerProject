@@ -39,6 +39,7 @@ import android.widget.FrameLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
 
+import com.github.ijkplayer.BuildConfig;
 import com.github.ijkplayer.IMediaPlayer;
 import com.github.ijkplayer.IjkMediaPlayer;
 import com.github.ijkplayer.IjkTimedText;
@@ -55,6 +56,12 @@ import java.util.Map;
 
 
 public class IjkVideoView extends FrameLayout implements MediaController.MediaPlayerControl {
+    private boolean debug= BuildConfig.DEBUG;
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
+
     private String TAG = "IjkVideoView";
     // settable by the client
     private Uri mUri;
@@ -989,7 +996,9 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                 IjkMediaPlayer ijkMediaPlayer = null;
                 if (mUri != null) {
                     ijkMediaPlayer = new IjkMediaPlayer();
-                    ijkMediaPlayer.native_setLogLevel(IjkMediaPlayer.IJK_LOG_DEBUG);
+                    if(debug){
+                        ijkMediaPlayer.native_setLogLevel(IjkMediaPlayer.IJK_LOG_DEBUG);
+                    }
 
                     if (mManifestString != null) {
                         ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "is-manifest", 1);

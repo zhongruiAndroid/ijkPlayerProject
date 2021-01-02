@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.example.ijkplayerproject.ijk.widget;
+package com.github.ijkplayer.widget.helper;
 
 import android.app.Service;
 import android.content.Context;

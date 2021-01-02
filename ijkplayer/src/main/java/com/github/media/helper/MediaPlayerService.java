@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.github.ijk.helper;
+package com.github.media.helper;
 
 import android.app.Service;
 import android.content.Context;
@@ -23,7 +23,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-import com.github.ijkplayer.IMediaPlayer;
+import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 
 public class MediaPlayerService extends Service {

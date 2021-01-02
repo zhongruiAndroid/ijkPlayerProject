@@ -15,15 +15,28 @@
  * limitations under the License.
  */
 
-package com.github.ijkplayer.misc;
+package com.github.media;
 
-import java.io.IOException;
+import android.view.View;
+import android.widget.MediaController;
 
-@SuppressWarnings("RedundantThrows")
-public interface IMediaDataSource {
-    int	 readAt(long position, byte[] buffer, int offset, int size) throws IOException;
+public interface IMediaController {
+    void hide();
 
-    long getSize() throws IOException;
+    boolean isShowing();
 
-    void close() throws IOException;
+    void setAnchorView(View view);
+
+    void setEnabled(boolean enabled);
+
+    void setMediaPlayer(MediaController.MediaPlayerControl player);
+
+    void show(int timeout);
+
+    void show();
+
+    //----------
+    // Extends
+    //----------
+    void showOnce(View view);
 }

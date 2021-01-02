@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.github.ijk;
+package com.github.media;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -32,12 +32,13 @@ import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
-import com.github.ijkplayer.IMediaPlayer;
-import com.github.ijkplayer.ISurfaceTextureHolder;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import tv.danmaku.ijk.media.player.IMediaPlayer;
+import tv.danmaku.ijk.media.player.ISurfaceTextureHolder;
 
 
 public class SurfaceRenderView extends SurfaceView implements IRenderView {

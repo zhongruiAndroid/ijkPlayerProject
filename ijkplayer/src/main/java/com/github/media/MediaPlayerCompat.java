@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-package com.github.ijk;
+package com.github.media;
 
-import com.github.ijkplayer.IMediaPlayer;
-import com.github.ijkplayer.IjkMediaPlayer;
-import com.github.ijkplayer.MediaPlayerProxy;
-import com.github.ijkplayer.TextureMediaPlayer;
+
+import tv.danmaku.ijk.media.player.IMediaPlayer;
+import tv.danmaku.ijk.media.player.IjkMediaPlayer;
+import tv.danmaku.ijk.media.player.MediaPlayerProxy;
+import tv.danmaku.ijk.media.player.TextureMediaPlayer;
 
 
 public class MediaPlayerCompat {

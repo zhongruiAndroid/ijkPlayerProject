@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.github.ijk;
+package com.github.media;
 
 import android.graphics.SurfaceTexture;
 import android.support.annotation.NonNull;
@@ -24,7 +24,7 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.View;
 
-import com.github.ijkplayer.IMediaPlayer;
+import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 
 public interface IRenderView {

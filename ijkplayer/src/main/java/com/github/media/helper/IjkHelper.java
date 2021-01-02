@@ -1,7 +1,8 @@
-package com.github.ijk.helper;
+package com.github.media.helper;
 
-import com.github.ijkplayer.IjkLibLoader;
-import com.github.ijkplayer.IjkMediaPlayer;
+
+import tv.danmaku.ijk.media.player.IjkLibLoader;
+import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 public class IjkHelper {
     public static void init() {

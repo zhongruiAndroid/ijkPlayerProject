@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.github.ijk;
+package com.github.media;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

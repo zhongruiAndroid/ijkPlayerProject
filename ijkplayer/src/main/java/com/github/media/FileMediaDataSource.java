@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-package com.github.ijk;
+package com.github.media;
 
-import com.github.ijkplayer.misc.IMediaDataSource;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+
+import tv.danmaku.ijk.media.player.misc.IMediaDataSource;
 
 
 public class FileMediaDataSource implements IMediaDataSource {

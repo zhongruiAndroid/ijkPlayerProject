@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.github.ijk;
+package com.github.media;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -39,19 +39,20 @@ import android.widget.FrameLayout;
 import android.widget.MediaController;
 
 import com.github.ijkplayer.BuildConfig;
-import com.github.ijkplayer.IMediaPlayer;
-import com.github.ijkplayer.IjkMediaPlayer;
-import com.github.ijkplayer.IjkTimedText;
 import com.github.ijkplayer.R;
-import com.github.ijkplayer.TextureMediaPlayer;
-import com.github.ijkplayer.misc.IMediaDataSource;
-import com.github.ijkplayer.misc.ITrackInfo;
-import com.github.ijk.helper.MediaPlayerService;
+import com.github.media.helper.MediaPlayerService;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Map;
+
+import tv.danmaku.ijk.media.player.IMediaPlayer;
+import tv.danmaku.ijk.media.player.IjkMediaPlayer;
+import tv.danmaku.ijk.media.player.IjkTimedText;
+import tv.danmaku.ijk.media.player.TextureMediaPlayer;
+import tv.danmaku.ijk.media.player.misc.IMediaDataSource;
+import tv.danmaku.ijk.media.player.misc.ITrackInfo;
 
 
 public class IjkVideoView extends FrameLayout implements MediaController.MediaPlayerControl {
@@ -563,7 +564,8 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                      * if we're attached to a window. When we're going away and no
                      * longer have a window, don't bother showing the user an error.
                      */
-                    if (getWindowToken() != null) {
+                    // TODO: 2021/1/2
+                    /*if (getWindowToken() != null) {
                         Resources r = mAppContext.getResources();
                         int messageId;
 
@@ -578,9 +580,9 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                                 .setPositiveButton(R.string.VideoView_error_button,
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int whichButton) {
-                                                /* If we get here, there is no onError listener, so
+                                                *//* If we get here, there is no onError listener, so
                                                  * at least inform them that the video is over.
-                                                 */
+                                                 *//*
                                                 if (mOnCompletionListener != null) {
                                                     mOnCompletionListener.onCompletion(mMediaPlayer);
                                                 }
@@ -588,7 +590,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                                         })
                                 .setCancelable(false)
                                 .show();
-                    }
+                    }*/
                     return true;
                 }
             };

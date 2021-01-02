@@ -5,13 +5,8 @@ import tv.danmaku.ijk.media.player.IjkLibLoader;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 public class IjkHelper {
-    public static void init() {
-        IjkMediaPlayer.loadLibrariesOnce(new IjkLibLoader() {
-            @Override
-            public void loadLibrary(String libName) throws UnsatisfiedLinkError, SecurityException {
-
-            }
-        });
+    public static void init(IjkLibLoader libLoader) {
+        IjkMediaPlayer.loadLibrariesOnce(libLoader);
     }
 
     public static void native_profileBegin() {

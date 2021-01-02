@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="IjkVideoView">
+        <attr name="renderView" format="enum">
+            <enum name="none" value="0"></enum>
+            <enum name="surfaceView" value="1"></enum>
+            <enum name="textureView" value="2"></enum>
+        </attr>
+        <attr name="useMediaCodec" format="boolean"></attr>
+        <attr name="useMediaCodecHandleResolutionChange" format="boolean"></attr>
+        <attr name="useMediaCodecAutoRotate" format="boolean"></attr>
+        <attr name="useOpenSLES" format="boolean"></attr>
+        <attr name="pixelFormat" format="enum">
+            <enum name="SDL_FCC_RV32" value="0"></enum>
+            <enum name="SDL_FCC_RV16" value="1"></enum>
+            <enum name="SDL_FCC_YV12" value="2"></enum>
+        </attr>
+        <attr name="useDetachedSurfaceTextureView" format="boolean"></attr>
+        <attr name="enableBackgroundPlay" format="boolean"></attr>
+    </declare-styleable>
+</resources>

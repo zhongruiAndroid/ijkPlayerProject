@@ -39,14 +39,14 @@ import android.widget.FrameLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
 
-import com.example.ijkplayerproject.R;
-import com.example.ijkplayerproject.ijk.widget.MediaPlayerService;
 import com.github.ijkplayer.IMediaPlayer;
 import com.github.ijkplayer.IjkMediaPlayer;
 import com.github.ijkplayer.IjkTimedText;
+import com.github.ijkplayer.R;
 import com.github.ijkplayer.TextureMediaPlayer;
 import com.github.ijkplayer.misc.IMediaDataSource;
 import com.github.ijkplayer.misc.ITrackInfo;
+import com.github.ijkplayer.widget.helper.MediaPlayerService;
 
 import java.io.File;
 import java.io.IOException;
@@ -118,9 +118,6 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     private long mSeekStartTime = 0;
     private long mSeekEndTime = 0;
 
-    private TextView subtitleDisplay;
-
-
 
 
     /*attr*/
@@ -130,7 +127,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     private boolean useMediaCodecHandleResolutionChange;
     private boolean useMediaCodecAutoRotate;
     private boolean useOpenSLES;
-    private int pixelFormat=0;
+    private int pixelFormat = 0;
     private boolean useDetachedSurfaceTextureView;
     private boolean enableBackgroundPlay = false;
 
@@ -160,19 +157,19 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     }
 
 
-
     private void initAttr(AttributeSet attrs) {
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.IjkVideoView);
-        useMediaCodec=typedArray.getBoolean(R.styleable.IjkVideoView_useMediaCodec,false);
-        useMediaCodecHandleResolutionChange =typedArray.getBoolean(R.styleable.IjkVideoView_useMediaCodecHandleResolutionChange,false);
-        useMediaCodecAutoRotate =typedArray.getBoolean(R.styleable.IjkVideoView_useMediaCodecAutoRotate,false);
-        useOpenSLES =typedArray.getBoolean(R.styleable.IjkVideoView_useOpenSLES,false);
-        pixelFormat =typedArray.getInt(R.styleable.IjkVideoView_pixelFormat,0);
-        useDetachedSurfaceTextureView =typedArray.getBoolean(R.styleable.IjkVideoView_useDetachedSurfaceTextureView,false);
-        enableBackgroundPlay =typedArray.getBoolean(R.styleable.IjkVideoView_enableBackgroundPlay,false);
+        useMediaCodec = typedArray.getBoolean(R.styleable.IjkVideoView_useMediaCodec, false);
+        useMediaCodecHandleResolutionChange = typedArray.getBoolean(R.styleable.IjkVideoView_useMediaCodecHandleResolutionChange, false);
+        useMediaCodecAutoRotate = typedArray.getBoolean(R.styleable.IjkVideoView_useMediaCodecAutoRotate, false);
+        useOpenSLES = typedArray.getBoolean(R.styleable.IjkVideoView_useOpenSLES, false);
+        pixelFormat = typedArray.getInt(R.styleable.IjkVideoView_pixelFormat, 0);
+        useDetachedSurfaceTextureView = typedArray.getBoolean(R.styleable.IjkVideoView_useDetachedSurfaceTextureView, false);
+        enableBackgroundPlay = typedArray.getBoolean(R.styleable.IjkVideoView_enableBackgroundPlay, false);
 
         typedArray.recycle();
     }
+
     // REMOVED: onMeasure
     // REMOVED: onInitializeAccessibilityEvent
     // REMOVED: onInitializeAccessibilityNodeInfo
@@ -194,14 +191,6 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         mCurrentState = STATE_IDLE;
         mTargetState = STATE_IDLE;
 
-        subtitleDisplay = new TextView(context);
-        subtitleDisplay.setTextSize(24);
-        subtitleDisplay.setGravity(Gravity.CENTER);
-        LayoutParams layoutParams_txt = new LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT,
-                Gravity.BOTTOM);
-        addView(subtitleDisplay, layoutParams_txt);
     }
 
     public void setRenderView(IRenderView renderView) {
@@ -272,7 +261,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
      * @param path the path of the video.
      */
     public void setVideoPath(String path) {
-        if (path.contains("adaptationSet")){
+        if (path.contains("adaptationSet")) {
             mManifestString = path;
             setVideoURI(Uri.EMPTY);
         } else {
@@ -355,10 +344,10 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
             mMediaPlayer.setOnTimedTextListener(mOnTimedTextListener);
             mCurrentBufferPercentage = 0;
             String scheme = mUri.getScheme();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&(TextUtils.isEmpty(scheme) || scheme.equalsIgnoreCase("file"))) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && (TextUtils.isEmpty(scheme) || scheme.equalsIgnoreCase("file"))) {
                 IMediaDataSource dataSource = new FileMediaDataSource(new File(mUri.toString()));
                 mMediaPlayer.setDataSource(dataSource);
-            }  else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                 mMediaPlayer.setDataSource(mAppContext, mUri, mHeaders);
             } else {
                 mMediaPlayer.setDataSource(mUri.toString());
@@ -583,9 +572,9 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                                 .setPositiveButton(R.string.VideoView_error_button,
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int whichButton) {
-                                            /* If we get here, there is no onError listener, so
-                                             * at least inform them that the video is over.
-                                             */
+                                                /* If we get here, there is no onError listener, so
+                                                 * at least inform them that the video is over.
+                                                 */
                                                 if (mOnCompletionListener != null) {
                                                     mOnCompletionListener.onCompletion(mMediaPlayer);
                                                 }
@@ -617,7 +606,6 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         @Override
         public void onTimedText(IMediaPlayer mp, IjkTimedText text) {
             if (text != null) {
-                subtitleDisplay.setText(text.getText());
             }
         }
     };
@@ -983,7 +971,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     public static final int PV_PLAYER_IjkExoMediaPlayer = 3;
 
     public IMediaPlayer createPlayer(int playerType) {
-        playerType=PV_PLAYER_IjkMediaPlayer;
+        playerType = PV_PLAYER_IjkMediaPlayer;
         IMediaPlayer mediaPlayer = null;
         switch (playerType) {
             case PV_PLAYER_IjkExoMediaPlayer: {
@@ -1030,12 +1018,12 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                     }
 
                     int overlay_format = IjkMediaPlayer.SDL_FCC_RV32;
-                    if(pixelFormat<=0) {
-                        overlay_format=IjkMediaPlayer.SDL_FCC_RV32;
-                    }else if(pixelFormat==1){
-                        overlay_format=IjkMediaPlayer.SDL_FCC_RV16;
-                    }else if(pixelFormat==2){
-                        overlay_format=IjkMediaPlayer.SDL_FCC_YV12;
+                    if (pixelFormat <= 0) {
+                        overlay_format = IjkMediaPlayer.SDL_FCC_RV32;
+                    } else if (pixelFormat == 1) {
+                        overlay_format = IjkMediaPlayer.SDL_FCC_RV16;
+                    } else if (pixelFormat == 2) {
+                        overlay_format = IjkMediaPlayer.SDL_FCC_YV12;
                     }
                     ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "overlay-format", overlay_format);
 

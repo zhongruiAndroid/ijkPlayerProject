@@ -21,7 +21,8 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
 
-import com.example.ijkplayerproject.R;
+
+import com.github.ijkplayer.R;
 
 import java.lang.ref.WeakReference;
 

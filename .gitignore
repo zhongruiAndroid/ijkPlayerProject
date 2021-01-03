@@ -15,3 +15,5 @@ gradle.properties
 build/
 help.gradle
 !demo.apk
+/http/
+/https/

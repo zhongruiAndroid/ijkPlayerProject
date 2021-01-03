@@ -21,7 +21,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        String url="https://dy-frontend.video.ums.uc.cn/video/wemedia/b8d8ca9a565a4f5cb57e094eac061f46/7ed8520a98cd9c9a709f088dd1356865-3815174574-2-0-4-h264.mp4?auth_key=1609585399-237329d82ce54803a5c8b200723c2cb1-0-c4ce1e466345107b6469bc2c6c5190a4";
+        String url="https://dy-frontend.video.ums.uc.cn/video/wemedia/421795e4cb6241ea8fee95501b755de7/0aabb87d9be7be1ffba0048260b9a724-3744068669-2-0-4-h264.mp4?auth_key=1609660970-1bb32f80934248eba9b4c9f80cb75792-0-ce144437e7fad68f4dacb6884c187a0a";
         ijkVideo=findViewById(R.id.ijkVideo);
         ijkVideo.setVideoPath(url);
         ijkVideo.start();

@@ -56,7 +56,7 @@ import tv.danmaku.ijk.media.player.misc.ITrackInfo;
 
 
 public class IjkVideoView extends FrameLayout implements MediaController.MediaPlayerControl {
-    private boolean debug= BuildConfig.DEBUG;
+    private boolean debug = BuildConfig.DEBUG;
 
     public void setDebug(boolean debug) {
         this.debug = debug;
@@ -126,6 +126,9 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     private long mSeekEndTime = 0;
 
 
+    public IMediaPlayer getMediaPlayer() {
+        return mMediaPlayer;
+    }
 
     /*attr*/
     /*硬解码*/
@@ -581,8 +584,8 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int whichButton) {
                                                 *//* If we get here, there is no onError listener, so
-                                                 * at least inform them that the video is over.
-                                                 *//*
+                     * at least inform them that the video is over.
+                     *//*
                                                 if (mOnCompletionListener != null) {
                                                     mOnCompletionListener.onCompletion(mMediaPlayer);
                                                 }
@@ -730,6 +733,10 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     /*
      * release the media player in any state
      */
+    public void release() {
+        release(true);
+    }
+
     public void release(boolean cleartargetstate) {
         if (mMediaPlayer != null) {
             mMediaPlayer.reset();
@@ -843,8 +850,8 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         if (isInPlaybackState()) {
             return (int) mMediaPlayer.getDuration();
         }
-
-        return -1;
+        return 0;
+     ////   return -1;
     }
 
     @Override
@@ -997,7 +1004,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                 IjkMediaPlayer ijkMediaPlayer = null;
                 if (mUri != null) {
                     ijkMediaPlayer = new IjkMediaPlayer();
-                    if(debug){
+                    if (debug) {
                         ijkMediaPlayer.native_setLogLevel(IjkMediaPlayer.IJK_LOG_DEBUG);
                     }
 

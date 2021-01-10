@@ -12,7 +12,7 @@
         android:id="@+id/ijkVideo"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        tools:layout_height="250dp" >
+        tools:layout_height="250dp">
 
     </com.github.media.IjkVideoView>
 
@@ -41,12 +41,37 @@
             android:text="00:00" />
     </LinearLayout>
 
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbFileTypeUrl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="url" />
+
+        <RadioButton
+            android:id="@+id/rbFileTypeAssets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="assets" />
+
+        <RadioButton
+            android:id="@+id/rbFileTypeRaw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="raw" />
+
+    </RadioGroup>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal">
-
 
         <Button
             android:id="@+id/btPlay"

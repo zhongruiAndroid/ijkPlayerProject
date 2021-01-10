@@ -32,6 +32,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.Surface;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.MediaController;
@@ -42,6 +44,7 @@ import com.github.media.helper.MediaPlayerService;
 import com.github.media.helper.DataSourceProvider;
 
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Map;
@@ -50,6 +53,7 @@ import tv.danmaku.ijk.media.player.AndroidMediaPlayer;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkTimedText;
+import tv.danmaku.ijk.media.player.MediaInfo;
 import tv.danmaku.ijk.media.player.TextureMediaPlayer;
 import tv.danmaku.ijk.media.player.misc.IMediaDataSource;
 import tv.danmaku.ijk.media.player.misc.ITrackInfo;
@@ -130,6 +134,224 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     private float rightVolume = -1;
 
     public IMediaPlayer getMediaPlayer() {
+        if(mMediaPlayer==null){
+            mMediaPlayer=new IMediaPlayer() {
+                @Override
+                public void setDisplay(SurfaceHolder sh) {
+
+                }
+
+                @Override
+                public void setDataSource(Context context, Uri uri) throws IOException, IllegalArgumentException, SecurityException, IllegalStateException {
+
+                }
+
+                @Override
+                public void setDataSource(Context context, Uri uri, Map<String, String> headers) throws IOException, IllegalArgumentException, SecurityException, IllegalStateException {
+
+                }
+
+                @Override
+                public void setDataSource(FileDescriptor fd) throws IOException, IllegalArgumentException, IllegalStateException {
+
+                }
+
+                @Override
+                public void setDataSource(String path) throws IOException, IllegalArgumentException, SecurityException, IllegalStateException {
+
+                }
+
+                @Override
+                public String getDataSource() {
+                    return null;
+                }
+
+                @Override
+                public void prepareAsync() throws IllegalStateException {
+
+                }
+
+                @Override
+                public void start() throws IllegalStateException {
+
+                }
+
+                @Override
+                public void stop() throws IllegalStateException {
+
+                }
+
+                @Override
+                public void pause() throws IllegalStateException {
+
+                }
+
+                @Override
+                public void setScreenOnWhilePlaying(boolean screenOn) {
+
+                }
+
+                @Override
+                public int getVideoWidth() {
+                    return 0;
+                }
+
+                @Override
+                public int getVideoHeight() {
+                    return 0;
+                }
+
+                @Override
+                public boolean isPlaying() {
+                    return false;
+                }
+
+                @Override
+                public void seekTo(long msec) throws IllegalStateException {
+
+                }
+
+                @Override
+                public long getCurrentPosition() {
+                    return 0;
+                }
+
+                @Override
+                public long getDuration() {
+                    return 0;
+                }
+
+                @Override
+                public void release() {
+
+                }
+
+                @Override
+                public void reset() {
+
+                }
+
+                @Override
+                public void setVolume(float leftVolume, float rightVolume) {
+
+                }
+
+                @Override
+                public int getAudioSessionId() {
+                    return 0;
+                }
+
+                @Override
+                public MediaInfo getMediaInfo() {
+                    return null;
+                }
+
+                @Override
+                public void setLogEnabled(boolean enable) {
+
+                }
+
+                @Override
+                public boolean isPlayable() {
+                    return false;
+                }
+
+                @Override
+                public void setOnPreparedListener(OnPreparedListener listener) {
+
+                }
+
+                @Override
+                public void setOnCompletionListener(OnCompletionListener listener) {
+
+                }
+
+                @Override
+                public void setOnBufferingUpdateListener(OnBufferingUpdateListener listener) {
+
+                }
+
+                @Override
+                public void setOnSeekCompleteListener(OnSeekCompleteListener listener) {
+
+                }
+
+                @Override
+                public void setOnVideoSizeChangedListener(OnVideoSizeChangedListener listener) {
+
+                }
+
+                @Override
+                public void setOnErrorListener(OnErrorListener listener) {
+
+                }
+
+                @Override
+                public void setOnInfoListener(OnInfoListener listener) {
+
+                }
+
+                @Override
+                public void setOnTimedTextListener(OnTimedTextListener listener) {
+
+                }
+
+                @Override
+                public void setAudioStreamType(int streamtype) {
+
+                }
+
+                @Override
+                public void setKeepInBackground(boolean keepInBackground) {
+
+                }
+
+                @Override
+                public int getVideoSarNum() {
+                    return 0;
+                }
+
+                @Override
+                public int getVideoSarDen() {
+                    return 0;
+                }
+
+                @Override
+                public void setWakeMode(Context context, int mode) {
+
+                }
+
+                @Override
+                public void setLooping(boolean looping) {
+
+                }
+
+                @Override
+                public boolean isLooping() {
+                    return false;
+                }
+
+                @Override
+                public ITrackInfo[] getTrackInfo() {
+                    return new ITrackInfo[0];
+                }
+
+                @Override
+                public void setSurface(Surface surface) {
+
+                }
+
+                @Override
+                public void setDataSource(IMediaDataSource mediaDataSource) {
+
+                }
+
+                @Override
+                public void setSpeed(float speed) {
+
+                }
+            };
+        }
         return mMediaPlayer;
     }
 
@@ -298,6 +520,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
      *                to disallow or allow cross domain redirection.
      */
     private void setVideoURI(Uri uri, Map<String, String> headers) {
+        afd=null;
         mUri = uri;
         mHeaders = headers;
         mSeekWhenPrepared = 0;

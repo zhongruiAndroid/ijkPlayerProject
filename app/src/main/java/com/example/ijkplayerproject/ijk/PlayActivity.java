@@ -6,6 +6,7 @@ import android.support.v7.widget.AppCompatSeekBar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -17,7 +18,6 @@ import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 public class PlayActivity extends AppCompatActivity implements View.OnClickListener {
     String url = "http://flashmedia.eastday.com/newdate/news/2016-11/shznews1125-19.mp4";
-
 
 
     private IjkVideoView ijkVideo;
@@ -34,9 +34,9 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     private Button btPast;
     private TextView tvOtherUrl;
 
-
-
-
+    private RadioButton rbFileTypeUrl;
+    private RadioButton rbFileTypeAssets;
+    private RadioButton rbFileTypeRaw;
 
 
     @Override
@@ -50,10 +50,8 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     private void initView() {
         ijkVideo = findViewById(R.id.ijkVideo);
-
 
 
         ijkVideo = findViewById(R.id.ijkVideo);
@@ -69,25 +67,31 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         btSpeed075.setOnClickListener(this);
 
         btSpeed1 = findViewById(R.id.btSpeed1);
+        btSpeed1.setOnClickListener(this);
+
         btSpeed15 = findViewById(R.id.btSpeed15);
+        btSpeed15.setOnClickListener(this);
+
         btSpeed2 = findViewById(R.id.btSpeed2);
+        btSpeed2.setOnClickListener(this);
+
 
         sbVolume = findViewById(R.id.sbVolume);
         sbVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                Log.i("=====","=====onProgressChanged"+fromUser);
+                Log.i("=====", "=====onProgressChanged" + fromUser);
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
 
-                Log.i("=====","=====onStartTrackingTouch");
+                Log.i("=====", "=====onStartTrackingTouch");
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Log.i("=====","=====onStopTrackingTouch");
+                Log.i("=====", "=====onStopTrackingTouch");
 
             }
         });
@@ -98,8 +102,12 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         tvOtherUrl = findViewById(R.id.tvOtherUrl);
         tvOtherUrl.setText(url);
 
+        rbFileTypeUrl = findViewById(R.id.rbFileTypeUrl);
+        rbFileTypeAssets = findViewById(R.id.rbFileTypeAssets);
+        rbFileTypeRaw = findViewById(R.id.rbFileTypeRaw);
 
     }
+
     private void initData() {
 
         ijkVideo.setOnInfoListener(new IMediaPlayer.OnInfoListener() {
@@ -110,6 +118,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         });
 
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -120,28 +129,41 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btPlay:
-//                ijkVideo.setVideoPath(tvOtherUrl.getText().toString());
-//                ijkVideo.setVideoResId(R.raw.test);
-                ijkVideo.setVideoAssetsPath("test/car.mp4");
+                if (rbFileTypeUrl.isChecked()) {
+                    ijkVideo.setVideoPath(tvOtherUrl.getText().toString());
+                } else if (rbFileTypeAssets.isChecked()) {
+                    ijkVideo.setVideoAssetsPath("test/car.mp4");
+                } else if (rbFileTypeRaw.isChecked()) {
+                    ijkVideo.setVideoResId(R.raw.test);
+                } else {
+                    ijkVideo.setVideoPath(tvOtherUrl.getText().toString());
+                }
                 ijkVideo.start();
-            break;
+                break;
             case R.id.btPause:
                 if (ijkVideo.isPlaying()) {
                     ijkVideo.pause();
-                }else{
+                } else {
                     ijkVideo.start();
                 }
-            break;
+                break;
             case R.id.btPast:
-                // TODO: 2021/1/3
                 sbVolume.setProgress(30);
-            break;
+                break;
             case R.id.btSpeed075:
-               IjkVideoView ijk=new IjkVideoView(this);
-
-            break;
+                ijkVideo.getMediaPlayer().setSpeed(0.75f);
+                break;
+            case R.id.btSpeed1:
+                ijkVideo.getMediaPlayer().setSpeed(1f);
+                break;
+            case R.id.btSpeed15:
+                ijkVideo.getMediaPlayer().setSpeed(1.5f);
+                break;
+            case R.id.btSpeed2:
+                ijkVideo.getMediaPlayer().setSpeed(2f);
+                break;
         }
     }
 }

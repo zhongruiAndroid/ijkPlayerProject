@@ -122,14 +122,16 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btPlay:
-                ijkVideo.setVideoPath(tvOtherUrl.getText().toString());
+//                ijkVideo.setVideoPath(tvOtherUrl.getText().toString());
+//                ijkVideo.setVideoResId(R.raw.test);
+                ijkVideo.setVideoAssetsPath("test/car.mp4");
                 ijkVideo.start();
             break;
             case R.id.btPause:
                 if (ijkVideo.isPlaying()) {
                     ijkVideo.pause();
                 }else{
-                    ijkVideo.resume();
+                    ijkVideo.start();
                 }
             break;
             case R.id.btPast:

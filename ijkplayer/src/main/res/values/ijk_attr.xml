@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="IjkVideoView">
+        <attr name="playerType" format="enum">
+            <enum name="mediaPlayer" value="1"></enum>
+            <enum name="ijk" value="2"></enum>
+        </attr>
         <attr name="renderView" format="enum">
             <enum name="none" value="0"></enum>
             <enum name="surfaceView" value="1"></enum>

@@ -1,16 +1,20 @@
 package com.example.ijkplayerproject.ijk;
 
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSeekBar;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.ijkplayerproject.R;
+import com.github.audiomanager.AudioListener;
+import com.github.audiomanager.AudioTools;
 import com.github.media.IjkVideoView;
 import com.github.media.helper.IjkHelper;
 
@@ -38,23 +42,48 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     private RadioButton rbFileTypeAssets;
     private RadioButton rbFileTypeRaw;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AudioTools.get().init(this);
         IjkHelper.init(null);
 //        IjkHelper.native_profileBegin();
         setContentView(R.layout.activity_play);
         initView();
         initData();
+
+        AudioTools.get().addListener(this, new AudioListener(){
+            @Override
+            public void onMusicVolumeChange(int preVolume, int volume) {
+                int maxVolume = AudioTools.get().getMaxVolume(AudioManager.STREAM_MUSIC);
+                int i = sbVolume.getMax() * volume / maxVolume;
+                sbVolume.setProgress(i);
+                ijkVideo.setVolume(volume);
+            }
+        });
+    }
+    private int getScreenWidth(){
+        return getResources().getDisplayMetrics().widthPixels;
     }
 
-
     private void initView() {
-        ijkVideo = findViewById(R.id.ijkVideo);
 
 
         ijkVideo = findViewById(R.id.ijkVideo);
+        ijkVideo.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(IMediaPlayer mp) {
+                int videoWidth = mp.getVideoWidth();
+                int videoHeight = mp.getVideoHeight();
+                int h = getScreenWidth() * videoHeight / videoWidth;
+                ViewGroup.LayoutParams layoutParams = ijkVideo.getLayoutParams();
+                layoutParams.width=getScreenWidth();
+                layoutParams.height=h;
+                ijkVideo.setLayoutParams(layoutParams);
+            }
+        });
+
+
         tvProgressTipsStart = findViewById(R.id.tvProgressTipsStart);
         sbProgress = findViewById(R.id.sbProgress);
         tvProgressTipsEnd = findViewById(R.id.tvProgressTipsEnd);
@@ -77,22 +106,28 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
 
 
         sbVolume = findViewById(R.id.sbVolume);
+        int maxVolume = AudioTools.get().getMaxVolume(AudioManager.STREAM_MUSIC);
+        int musicVolume = AudioTools.get().getMusicVolume();
+        int i = sbVolume.getMax() * musicVolume / maxVolume;
+        sbVolume.setProgress(i);
         sbVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(!fromUser){
+                    return;
+                }
+                int maxVolume = AudioTools.get().getMaxVolume(AudioManager.STREAM_MUSIC);
+                int i = progress * maxVolume / sbVolume.getMax();
+                AudioTools.get().setMusicVolume(i);
                 Log.i("=====", "=====onProgressChanged" + fromUser);
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
                 Log.i("=====", "=====onStartTrackingTouch");
             }
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 Log.i("=====", "=====onStopTrackingTouch");
-
             }
         });
 
@@ -125,6 +160,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         ijkVideo.release();
 //        ijkVideo.releaseWithoutStop();
         IjkHelper.native_profileEnd();
+        AudioTools.get().unInit();
     }
 
     @Override

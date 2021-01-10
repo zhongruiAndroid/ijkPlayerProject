@@ -66,6 +66,8 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         btPause.setOnClickListener(this);
 
         btSpeed075 = findViewById(R.id.btSpeed075);
+        btSpeed075.setOnClickListener(this);
+
         btSpeed1 = findViewById(R.id.btSpeed1);
         btSpeed15 = findViewById(R.id.btSpeed15);
         btSpeed2 = findViewById(R.id.btSpeed2);
@@ -133,6 +135,10 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btPast:
                 // TODO: 2021/1/3
                 sbVolume.setProgress(30);
+            break;
+            case R.id.btSpeed075:
+               IjkVideoView ijk=new IjkVideoView(this);
+
             break;
         }
     }

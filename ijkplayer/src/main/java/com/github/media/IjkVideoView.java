@@ -24,6 +24,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.RawRes;
 import android.text.TextUtils;
@@ -39,13 +40,15 @@ import android.widget.FrameLayout;
 import android.widget.MediaController;
 
 import com.github.ijkplayer.BuildConfig;
+import com.github.media.helper.DataSourceProvider;
 import com.github.media.helper.IjkAttrConfig;
 import com.github.media.helper.MediaPlayerService;
-import com.github.media.helper.DataSourceProvider;
 
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.Locale;
 import java.util.Map;
 
@@ -134,8 +137,8 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     private float rightVolume = -1;
 
     public IMediaPlayer getMediaPlayer() {
-        if(mMediaPlayer==null){
-            mMediaPlayer=new IMediaPlayer() {
+        if (mMediaPlayer == null) {
+            mMediaPlayer = new IMediaPlayer() {
                 @Override
                 public void setDisplay(SurfaceHolder sh) {
 
@@ -520,7 +523,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
      *                to disallow or allow cross domain redirection.
      */
     private void setVideoURI(Uri uri, Map<String, String> headers) {
-        afd=null;
+        afd = null;
         mUri = uri;
         mHeaders = headers;
         mSeekWhenPrepared = 0;
@@ -610,7 +613,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                 scheme = mUri.getScheme();
             }
             if (afd != null) {
-                DataSourceProvider dataSourceProvider=new DataSourceProvider(afd);
+                DataSourceProvider dataSourceProvider = new DataSourceProvider(afd);
                 mMediaPlayer.setDataSource(dataSourceProvider);
             } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && (TextUtils.isEmpty(scheme) || scheme.equalsIgnoreCase("file"))) {
                 IMediaDataSource dataSource = new FileMediaDataSource(new File(mUri.toString()));
@@ -1306,6 +1309,26 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                     ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "start-on-prepared", 0);
                     ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "http-detect-range-support", 0);
                     ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_CODEC, "skip_loop_filter", 48);
+
+                    boolean canUseCache=false;
+                    if (getConfig().isUseCache() && mUri != null) {
+                        String scheme = mUri.getScheme();
+                        if (!TextUtils.isEmpty(scheme)&&(scheme.equalsIgnoreCase("http") || scheme.equalsIgnoreCase("https"))) {
+                            canUseCache=true;
+                            ijkMediaPlayer.setUseCache(getConfig().isUseCache());
+                            String url = mUri.toString();
+                            String cacheName = md5(url);
+                            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "cache_file_path",getCachePath() +File.separator+ cacheName+".temp");
+                            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "cache_map_path", getCachePath() +File.separator+ cacheName+".map");
+                            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "parse_cache_map", 1);
+                            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "auto_save_map", 1);
+                        }
+                    }
+                    if(!canUseCache){
+                        ijkMediaPlayer.setUseCache(false);
+                        ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "parse_cache_map", 0);
+                        ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "auto_save_map", 0);
+                    }
                 }
                 mediaPlayer = ijkMediaPlayer;
             }
@@ -1318,7 +1341,42 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
 
         return mediaPlayer;
     }
-
+    private String cachePath;
+    private String getCachePath(){
+        if(TextUtils.isEmpty(cachePath)){
+            File cacheFile=null;
+            if(Environment.MEDIA_MOUNTED.equalsIgnoreCase(Environment.getExternalStorageState())){
+                cacheFile=getContext().getExternalCacheDir();
+            }
+            if(cacheFile==null){
+                cacheFile=getContext().getCacheDir();
+            }
+            cachePath=cacheFile.getAbsolutePath()+File.separator+"ijk/video";
+            File file = new File(cachePath);
+            if(!file.exists()){
+                file.mkdirs();
+            }
+        }
+        return cachePath;
+    }
+    public static String md5(String string) {
+        if (TextUtils.isEmpty(string)) {
+            return null;
+        }
+        try {
+            // 生成一个MD5加密计算摘要
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            // 计算md5函数
+            md.update(string.getBytes());
+            // digest()最后确定返回md5 hash值，返回值为8位字符串。因为md5 hash值是16位的hex值，实际上就是8位的字符
+            // BigInteger函数则将8位的字符串转换成16位hex值，用字符串来表示；得到字符串形式的hash值
+            //一个byte是八位二进制，也就是2位十六进制字符（2的8次方等于16的2次方）
+            return new BigInteger(1, md.digest()).toString(16);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     //-------------------------
     // Extend: Background
     //-------------------------

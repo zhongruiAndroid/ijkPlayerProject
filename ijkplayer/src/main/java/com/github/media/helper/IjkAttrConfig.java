@@ -21,7 +21,7 @@ public class IjkAttrConfig {
     private int pixelFormat=IjkMediaPlayer.SDL_FCC_RV32;
     private boolean useDetachedSurfaceTextureView;
     private boolean enableBackgroundPlay;
-
+    private boolean useCache;
 
     public int getPlayerType() {
         return playerType;
@@ -113,7 +113,16 @@ public class IjkAttrConfig {
     public void setEnableBackgroundPlay(boolean enableBackgroundPlay) {
         this.enableBackgroundPlay = enableBackgroundPlay;
     }
-    public void initAttr(Context context,AttributeSet attrs) {
+
+    public boolean isUseCache() {
+        return useCache;
+    }
+
+    public void setUseCache(boolean useCache) {
+        this.useCache = useCache;
+    }
+
+    public void initAttr(Context context, AttributeSet attrs) {
         if(context==null){
             return;
         }
@@ -124,6 +133,7 @@ public class IjkAttrConfig {
         useMediaCodecHandleResolutionChange = typedArray.getBoolean(R.styleable.IjkVideoView_useMediaCodecHandleResolutionChange, false);
         useMediaCodecAutoRotate = typedArray.getBoolean(R.styleable.IjkVideoView_useMediaCodecAutoRotate, false);
         useOpenSLES = typedArray.getBoolean(R.styleable.IjkVideoView_useOpenSLES, false);
+        useCache = typedArray.getBoolean(R.styleable.IjkVideoView_useCache, false);
         int overlay_format = typedArray.getInt(R.styleable.IjkVideoView_pixelFormat, 0);
 
         if (overlay_format <= 0) {

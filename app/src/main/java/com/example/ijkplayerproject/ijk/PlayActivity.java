@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -42,6 +43,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     private RadioButton rbFileTypeAssets;
     private RadioButton rbFileTypeRaw;
 
+    private CheckBox cbUrlUseCache;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,6 +142,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         rbFileTypeUrl = findViewById(R.id.rbFileTypeUrl);
         rbFileTypeAssets = findViewById(R.id.rbFileTypeAssets);
         rbFileTypeRaw = findViewById(R.id.rbFileTypeRaw);
+        cbUrlUseCache = findViewById(R.id.cbUrlUseCache);
 
     }
 
@@ -167,6 +170,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btPlay:
+                ijkVideo.getConfig().setUseCache(cbUrlUseCache.isChecked());
                 if (rbFileTypeUrl.isChecked()) {
                     ijkVideo.setVideoPath(tvOtherUrl.getText().toString());
                 } else if (rbFileTypeAssets.isChecked()) {
@@ -176,6 +180,8 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     ijkVideo.setVideoPath(tvOtherUrl.getText().toString());
                 }
+//                File test = getExternalFilesDir("test");
+//                ijkVideo.setVideoPath(test.getAbsolutePath()+"/file.mp4");
                 ijkVideo.start();
                 break;
             case R.id.btPause:

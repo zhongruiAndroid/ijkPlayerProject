@@ -44,6 +44,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     private RadioButton rbFileTypeRaw;
 
     private CheckBox cbUrlUseCache;
+    private CheckBox cbLoopPlay;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,6 +144,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         rbFileTypeAssets = findViewById(R.id.rbFileTypeAssets);
         rbFileTypeRaw = findViewById(R.id.rbFileTypeRaw);
         cbUrlUseCache = findViewById(R.id.cbUrlUseCache);
+        cbLoopPlay = findViewById(R.id.cbLoopPlay);
 
     }
 
@@ -182,6 +184,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
                 }
 //                File test = getExternalFilesDir("test");
 //                ijkVideo.setVideoPath(test.getAbsolutePath()+"/file.mp4");
+                ijkVideo.getMediaPlayer().setLooping(cbLoopPlay.isChecked());
                 ijkVideo.start();
                 break;
             case R.id.btPause:

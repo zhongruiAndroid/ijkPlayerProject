@@ -83,6 +83,12 @@
                 android:layout_height="wrap_content"
                 android:text="边播边缓存"
                 />
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/cbLoopPlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="循环播放"
+                />
             <Button
                 android:id="@+id/btPlay"
                 android:layout_width="wrap_content"

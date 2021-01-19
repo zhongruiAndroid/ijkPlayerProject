@@ -22,5 +22,6 @@
         <attr name="useDetachedSurfaceTextureView" format="boolean"></attr>
         <attr name="enableBackgroundPlay" format="boolean"></attr>
         <attr name="useCache" format="boolean"></attr>
+        <attr name="cacheFileSuffixName" format="string"></attr>
     </declare-styleable>
 </resources>

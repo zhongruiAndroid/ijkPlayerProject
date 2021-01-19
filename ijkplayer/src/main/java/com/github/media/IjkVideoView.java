@@ -1310,21 +1310,25 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                     ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "http-detect-range-support", 0);
                     ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_CODEC, "skip_loop_filter", 48);
 
-                    boolean canUseCache=false;
+                    boolean canUseCache = false;
                     if (getConfig().isUseCache() && mUri != null) {
                         String scheme = mUri.getScheme();
-                        if (!TextUtils.isEmpty(scheme)&&(scheme.equalsIgnoreCase("http") || scheme.equalsIgnoreCase("https"))) {
-                            canUseCache=true;
+                        if (!TextUtils.isEmpty(scheme) && (scheme.equalsIgnoreCase("http") || scheme.equalsIgnoreCase("https"))) {
+                            canUseCache = true;
                             ijkMediaPlayer.setUseCache(getConfig().isUseCache());
                             String url = mUri.toString();
                             String cacheName = md5(url);
-                            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "cache_file_path",getCachePath() +File.separator+ cacheName+".temp");
-                            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "cache_map_path", getCachePath() +File.separator+ cacheName+".map");
+                            String cachePath = getConfig().getCachePath();
+                            if (TextUtils.isEmpty(cachePath)) {
+                                cachePath = getCachePath();
+                            }
+                            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "cache_file_path", cachePath + File.separator + cacheName + getConfig().getCacheFileSuffixName());
+                            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "cache_map_path", cachePath + File.separator + cacheName + ".map");
                             ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "parse_cache_map", 1);
                             ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "auto_save_map", 1);
                         }
                     }
-                    if(!canUseCache){
+                    if (!canUseCache) {
                         ijkMediaPlayer.setUseCache(false);
                         ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "parse_cache_map", 0);
                         ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "auto_save_map", 0);
@@ -1341,24 +1345,27 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
 
         return mediaPlayer;
     }
+
     private String cachePath;
-    private String getCachePath(){
-        if(TextUtils.isEmpty(cachePath)){
-            File cacheFile=null;
-            if(Environment.MEDIA_MOUNTED.equalsIgnoreCase(Environment.getExternalStorageState())){
-                cacheFile=getContext().getExternalCacheDir();
+
+    private String getCachePath() {
+        if (TextUtils.isEmpty(cachePath)) {
+            File cacheFile = null;
+            if (Environment.MEDIA_MOUNTED.equalsIgnoreCase(Environment.getExternalStorageState())) {
+                cacheFile = getContext().getExternalCacheDir();
             }
-            if(cacheFile==null){
-                cacheFile=getContext().getCacheDir();
+            if (cacheFile == null) {
+                cacheFile = getContext().getCacheDir();
             }
-            cachePath=cacheFile.getAbsolutePath()+File.separator+"ijk/video";
+            cachePath = cacheFile.getAbsolutePath() + File.separator + "ijk/video";
             File file = new File(cachePath);
-            if(!file.exists()){
+            if (!file.exists()) {
                 file.mkdirs();
             }
         }
         return cachePath;
     }
+
     public static String md5(String string) {
         if (TextUtils.isEmpty(string)) {
             return null;

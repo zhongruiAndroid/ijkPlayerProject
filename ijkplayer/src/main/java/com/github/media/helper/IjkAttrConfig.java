@@ -2,6 +2,7 @@ package com.github.media.helper;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import com.github.ijkplayer.R;
@@ -22,6 +23,9 @@ public class IjkAttrConfig {
     private boolean useDetachedSurfaceTextureView;
     private boolean enableBackgroundPlay;
     private boolean useCache;
+    private String cachePath;
+    private static final String def_suffix_name=".temp";
+    private String cacheFileSuffixName=def_suffix_name;
 
     public int getPlayerType() {
         return playerType;
@@ -118,6 +122,28 @@ public class IjkAttrConfig {
         return useCache;
     }
 
+    public String getCachePath() {
+        return cachePath;
+    }
+
+    public void setCachePath(String cachePath) {
+        this.cachePath = cachePath;
+    }
+
+    public String getCacheFileSuffixName() {
+        if(!TextUtils.isEmpty(cacheFileSuffixName)){
+            boolean b = cacheFileSuffixName.startsWith(".");
+            if(!b){
+                cacheFileSuffixName="."+cacheFileSuffixName;
+            }
+        }
+        return cacheFileSuffixName;
+    }
+
+    public void setCacheFileSuffixName(String cacheFileSuffixName) {
+        this.cacheFileSuffixName = cacheFileSuffixName;
+    }
+
     public void setUseCache(boolean useCache) {
         this.useCache = useCache;
     }
@@ -134,6 +160,10 @@ public class IjkAttrConfig {
         useMediaCodecAutoRotate = typedArray.getBoolean(R.styleable.IjkVideoView_useMediaCodecAutoRotate, false);
         useOpenSLES = typedArray.getBoolean(R.styleable.IjkVideoView_useOpenSLES, false);
         useCache = typedArray.getBoolean(R.styleable.IjkVideoView_useCache, false);
+        cacheFileSuffixName = typedArray.getString(R.styleable.IjkVideoView_cacheFileSuffixName);
+        if(TextUtils.isEmpty(cacheFileSuffixName)){
+            cacheFileSuffixName=def_suffix_name;
+        }
         int overlay_format = typedArray.getInt(R.styleable.IjkVideoView_pixelFormat, 0);
 
         if (overlay_format <= 0) {

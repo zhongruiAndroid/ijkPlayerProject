@@ -1094,7 +1094,9 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         }
         mTargetState = STATE_PLAYING;
     }
-
+    public void resume() {
+        start();
+    }
     @Override
     public void pause() {
         if (isInPlaybackState()) {
@@ -1110,7 +1112,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         release(false);
     }
 
-    public void resume() {
+    public void reStart() {
         openVideo();
     }
 

@@ -17,3 +17,5 @@ help.gradle
 !demo.apk
 /http/
 /https/
+gradlew
+gradlew.bat

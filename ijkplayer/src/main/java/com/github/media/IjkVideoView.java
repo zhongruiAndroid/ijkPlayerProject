@@ -926,6 +926,10 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         mOnErrorListener = l;
     }
 
+    public void setBufferingUpdateListener(IMediaPlayer.OnBufferingUpdateListener bufferingUpdateListener) {
+        this.bufferingUpdateListener = bufferingUpdateListener;
+    }
+
     /**
      * Register a callback to be invoked when an informational event
      * occurs during playback or setup.

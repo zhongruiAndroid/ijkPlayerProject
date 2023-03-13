@@ -22,7 +22,8 @@ import com.github.media.helper.IjkHelper;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 public class PlayActivity extends AppCompatActivity implements View.OnClickListener {
-    String url = "http://flashmedia.eastday.com/newdate/news/2016-11/shznews1125-19.mp4";
+    String url = "http://jdvodluwytr3t.vod.126.net/jdvodluwytr3t/nos/ept/hls/2019/03/20/1214457506_fb09ce1669704168a6b56878724ab838_esd.m3u8";//?ak=7909bff134372bffca53cdc2c17adc27a4c38c6336120510aea1ae1790819de89bd87aa1825daf647a5c0b714b8eed29564993ff2eb0e995658d1051945a9adf4eb900f4ba643bf70c7dc9d2201c4f1bdc2c820d02e05f097dce22a2d269d51b30d7326413f2c325d90c0e56061a553ee6fc2ae2e15a00d5fd833ea365cf99f40fadfe637d1a6500ff2f63b9e5380ed8";
+//    String url = "http://flashmedia.eastday.com/newdate/news/2016-11/shznews1125-19.mp4";
 
 
     private IjkVideoView ijkVideo;
